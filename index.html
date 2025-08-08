@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'ddos-p3-captcha-challenges': {
                 title: "Şüpheli Trafik için CAPTCHA Zorlaması Getir",
                 text: "Her şüpheli isteğe CAPTCHA göstermek, botları durdurdu ancak kullanıcı deneyimini mahvetti. Müşterileriniz, sitenize her girişte robot olmadıklarını kanıtlamaktan yoruldu ve bu durum memnuniyeti dibe çekti.",
-                strat: "CAPTCHA, nükleer bir seçenektir. Botları etkili bir şekilde durdurur ama meşru kullanıcıları da cezalandırır. Sadece en çaresiz anlarda ve geçici olarak kullanılmalıdır.",
+                strat: "CAPTCHA, nükleer bir seçenektir. Botları etkili bir şekilde durdurur ama meşru kullanıcıları da landırır. Sadece en çaresiz anlarda ve geçici olarak kullanılmalıdır.",
                 changes: { systemLoad: 'Orta', attackEffectiveness: 'Kısmen Kontrol', financialLoss: 5000, downtime: 5, customerSatisfaction: -35 },
                 impact: 'Neutral'
             },
@@ -777,25 +777,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const correctAttribution = this.state.attribution === 'gang';
 
             // 1) Finansal Zarar Cezası (Her 10,000₺ için 2.0 puan kayıp)  <-- artırıldı
-            totalScore -= (this.score.financialLoss / 10000) * 2.0;
+            totalScore -= (this.score.financialLoss / 10000) * 1.0;
 
             // 2) Kesinti Süresi Cezası (Her 10 dakika için 2.5 puan kayıp) <-- artırıldı
-            totalScore -= (this.score.downtime / 10) * 2.5;
+            totalScore -= (this.score.downtime / 10) * 1.5;
 
             // 3) Müşteri Memnuniyeti Cezası (100'ün altındaki her puan için 0.6 puan kayıp) <-- artırıldı
             
             // 4) Yanlış Atıf Cezası (aynı kaldı)
             if (!correctAttribution) {
-                totalScore -= 25;
+                totalScore -= 15;
             }
 
 
             let badgeInfo = {};
-            if (totalScore >= 90 && correctAttribution) { 
+            if (totalScore >= 70 && correctAttribution) { 
                 badgeInfo = { text: 'DDoS EFENDİSİ!', color: 'var(--accent-green)' };
-            } else if (totalScore >= 75) { 
-                badgeInfo = { text: 'DİRENÇLİ AĞ UZMANI', color: 'var(--accent-blue)' };
             } else if (totalScore >= 50) { 
+                badgeInfo = { text: 'DİRENÇLİ AĞ UZMANI', color: 'var(--accent-blue)' };
+            } else if (totalScore >= 30) { 
                 badgeInfo = { text: 'ZORLU DDoS DENEYİMİ', color: 'var(--accent-yellow)' };
             } else { 
                 badgeInfo = { text: 'DDoS FELAKETİ', color: 'var(--accent-red)' };
